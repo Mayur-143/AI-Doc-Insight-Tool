@@ -21,44 +21,106 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 
 ## 🔧 Setup & Installation
 
-### 1️⃣ Clone the Repository
+### Backend
+
+1. **Clone the repository:**
 ```bash
-git clone https://github.com/Mayur-143/AI-Doc-Insight-Tool.git
-cd AI-Doc-Insight-Tool
-```
-### 2️⃣ Backend Setup (FastAPI)
+   git clone https://github.com/Mayur-143/AI-Doc-Insight-Tool.git
+   cd AI-Doc-Insight-Tool/backend
+ ```
+2. **Create and activate a Python virtual environment:**
+   - On macOS/Linux:
 ```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate   # On Windows
-source venv/bin/activate  # On Mac/Linux
-cd ../
-pip install -r requirements.txt
+     python3 -m venv venv
+     source venv/bin/activate
 ```
-Create a .env file inside the backend/ folder:
+   - On Windows:
+```bash 
+     python -m venv venv
+     venv\Scripts\activate
+```
+3. **Install required dependencies:**
+```bash 
+   pip install -r requirements.txt
+```
+   The backend uses FastAPI, SQLAlchemy, reportlab, pdfplumber, docx2txt, and dotenv among other libraries.
+
+### Frontend
+
+1. **Navigate to the frontend folder:**
 ```bash
-SARVAM_API_KEY=your_api_key_here
+   cd ../frontend
+ ```
+2. **Install Node dependencies:**
+```bash
+   npm install
 ```
-or set env key in the command prompt(PowerShell)
+   Alternatively, you can use yarn:
+```bash
+   yarn install
+```
+
+## Configuration
+
+### Environment Variables
+
+For proper backend functionality, create a `.env` file in the backend folder with the following environment variables:
+
+- **SARVAM_API_KEY**: Set your API key for SarvamAI which is used for AI-driven summarization in resume evaluations.
+- **DATABASE_URL**: The SQLite database URL is set by default as `sqlite:///./documents.db`, but you may adjust it as needed.
+
+Example `.env` file:
+```bash
+SARVAM_API_KEY=your_sarvam_api_key_here
+DATABASE_URL=sqlite:///./documents.db
+```
+or set env key in the Command prompt (PowerShell on Windows)
 ```bash
 $env:SARVAM_API_KEY="your_api_key_here"
 ```
-Run Backend (from root directory): 
+
+### CORS Settings
+
+In the backend (`main.py`), CORS middleware is enabled to allow all origins. If you wish to modify allowed domains, update the `allow_origins` parameter.
+
+## Usage
+
+### Running the Backend Server
+
+Run the backend server using Uvicorn:
 ```bash
 uvicorn backend.main:app --reload
 ```
-Backend will run at → http://127.0.0.1:8000
-### Database
-- By default, SQLite is used. The DB file is automatically created on first run.
-- Can be swapped with PostgreSQL/MySQL by updating database.py.
+This command starts the FastAPI server with live reload enabled for development. The backend exposes endpoints such as:
+- `/upload-resume`: Accepts resume files (PDF or DOCX) and returns analysis insights.
+- `/insights`: Provides access to the detailed resume analysis history.
+- `/download-report/{doc_id}`: Downloads a generated PDF report based on the resume insights.
+Backend will run at → http://127.0.0.1:8000 
 
-### 3️⃣ Frontend Setup (React + Tailwind)
+### Running the Frontend Application
+
+After installing dependencies, start the frontend development server:
 ```bash
-cd frontend
-npm install
 npm start
 ```
+or with yarn:
+```bash
+yarn start
+```
 Frontend will run at → http://localhost:3000
+The web app provides an interface where users can:
+- **Upload Resumes:** In the “Upload Your Resume” section, choose a file (PDF or DOCX). 
+- **View Insights:** Once a resume is processed, the insights are displayed with evaluation scores, summaries, and key details.
+- **Download Reports:** A downloadable PDF report is generated for each analyzed resume.
+- **Review History:** Navigate the "History" tab to review previous analyses with options to expand detailed insights and download corresponding reports.
+
+### Building for Production
+
+To create a production bundle for the frontend, run:
+```bash
+npm run build
+```
+This bundles the React application for deployment.
 
 ## 🖼 Sample Workflow
 - Upload a resume PDF.
@@ -71,18 +133,23 @@ Frontend will run at → http://localhost:3000
 
 ```mermaid
 sequenceDiagram
-    participant FE as Frontend
-    participant BE as FastAPI
-    participant AI as SarvamAI
-    participant DB as SQLite
+    participant FE as Frontend (React)
+    participant BE as FastAPI Backend
+    participant AI as Sarvam AI API
+    participant DB as SQLite/Postgres
 
-    FE->>BE: POST /upload-resume (file)
-    BE->>BE: extract_text / docx2txt
-    BE->>AI: chat.completions(prompt)
-    AI-->>BE: JSON insights
-    BE->>DB: INSERT Document
-    DB-->>BE: commit & refresh
-    BE-->>FE: {doc_id, insights, time}
+    FE->>BE: POST /upload-resume (PDF file)
+    BE->>BE: Extract text (PyPDF2 / pdfminer)
+    alt AI available
+        BE->>AI: Summarization request
+        AI-->>BE: AI-generated insights
+    else AI busy/unavailable
+        BE->>BE: Run fallback (top 5 frequent words)
+    end
+    BE->>DB: INSERT {doc_id, filename, insights, time}
+    DB-->>BE: commit & doc_id
+    BE-->>FE: JSON {doc_id, filename, insights, verdict, time}
+    FE->>FE: Render insights + verdict pill
 ```
 
 ## 📂 Example API Endpoints
