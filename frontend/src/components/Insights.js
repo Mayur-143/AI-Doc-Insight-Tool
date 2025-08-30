@@ -6,6 +6,8 @@ import {
 import "react-circular-progressbar/dist/styles.css";
 import { motion } from "framer-motion";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "/api";
+
 // fallback markdown strip
 const stripMarkdown = (text) =>
   text
@@ -75,7 +77,7 @@ function Insights({ insights }) {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href={`http://127.0.0.1:8000/download-report/${insights.doc_id}`}
+            href={`${API_BASE_URL}/download-report/${insights.doc_id}`}
             className="px-3 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold shadow hover:from-blue-600 hover:to-blue-800"
           >
             Download PDF

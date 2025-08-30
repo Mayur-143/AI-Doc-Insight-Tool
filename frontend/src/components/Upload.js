@@ -1,6 +1,8 @@
 
 import React, { useState } from "react";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "/api";
+
 function Upload({ setInsights, setHistory, setActiveTab }) {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ function Upload({ setInsights, setHistory, setActiveTab }) {
       // Simulate progress message change
       setTimeout(() => setProgressMsg("Analyzing content and extracting insights..."), 1200);
 
-      const res = await fetch("http://127.0.0.1:8000/upload-resume", {
+      const res = await fetch(`${API_BASE_URL}/upload-resume`, {
         method: "POST",
         body: formData,
       });
@@ -27,7 +29,7 @@ function Upload({ setInsights, setHistory, setActiveTab }) {
       setActiveTab && setActiveTab("insights");
 
       setProgressMsg("Fetching upload history...");
-      const historyRes = await fetch("http://127.0.0.1:8000/insights");
+      const historyRes = await fetch(`${API_BASE_URL}/insights`);
       setHistory(await historyRes.json());
       setProgressMsg("");
     } catch (err) {

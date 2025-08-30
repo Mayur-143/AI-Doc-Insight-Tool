@@ -7,6 +7,8 @@ import "react-circular-progressbar/dist/styles.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "/api";
+
 function History({ history }) {
   const [expanded, setExpanded] = useState(null);
   const expandedRef = useRef(null);
@@ -96,7 +98,7 @@ function History({ history }) {
                       <div className="flex justify-end">
                         <a
                           className="px-3 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 shadow-sm"
-                          href={`http://127.0.0.1:8000/download-report/${doc.doc_id}`}
+                          href={`${API_BASE_URL}/download-report/${doc.doc_id}`}
                         >
                           Download PDF
                         </a>

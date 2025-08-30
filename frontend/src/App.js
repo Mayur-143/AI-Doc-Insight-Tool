@@ -3,6 +3,8 @@ import Upload from "./components/Upload";
 import Insights from "./components/Insights";
 import History from "./components/History";
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || "/api";
+
 function App() {
   const [insights, setInsights] = useState(null);
   const [history, setHistory] = useState([]);
@@ -15,7 +17,7 @@ function App() {
     if (query) params.set("q", query);
     if (sortOrder) params.set("sort", sortOrder);
     const res = await fetch(
-      `http://127.0.0.1:8000/insights?${params.toString()}`
+      `${API_BASE_URL}/insights?${params.toString()}`
     );
     const data = await res.json();
     setHistory(data);
