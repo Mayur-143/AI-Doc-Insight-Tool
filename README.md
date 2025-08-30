@@ -38,11 +38,18 @@ source venv/bin/activate  # On Mac/Linux
 
 pip install -r requirements.txt
 ```
+Create a .env file inside the backend/ folder:
+```bash
+SARVAM_API_KEY=your_api_key_here
+```
 Run Backend: 
 ```bash
 uvicorn main:app --reload
 ```
 Backend will run at → http://127.0.0.1:8000
+### Database
+- By default, SQLite is used. The DB file is automatically created on first run.
+- Can be swapped with PostgreSQL/MySQL by updating database.py.
 
 ### 3️⃣ Frontend Setup (React + Tailwind)
 ```bash
