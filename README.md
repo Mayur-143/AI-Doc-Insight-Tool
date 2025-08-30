@@ -17,7 +17,6 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 - Database → SQLite (default, can be swapped with PostgreSQL/MySQL)
 - AI Layer → Sarvam AI API (summarization)
 - PDF Reports → ReportLab
----
 
 ## 🔧 Setup & Installation
 
@@ -25,23 +24,23 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 
 1. **Clone the repository:**
 ```bash
-   git clone https://github.com/Mayur-143/AI-Doc-Insight-Tool.git
-   cd AI-Doc-Insight-Tool/backend
+git clone https://github.com/Mayur-143/AI-Doc-Insight-Tool.git
+cd AI-Doc-Insight-Tool/backend
  ```
 2. **Create and activate a Python virtual environment:**
    - On macOS/Linux:
 ```bash
-     python3 -m venv venv
-     source venv/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
    - On Windows:
 ```bash 
-     python -m venv venv
-     venv\Scripts\activate
+python -m venv venv
+venv\Scripts\activate
 ```
 3. **Install required dependencies:**
 ```bash 
-   pip install -r requirements.txt
+pip install -r requirements.txt
 ```
    The backend uses FastAPI, SQLAlchemy, reportlab, pdfplumber, docx2txt, and dotenv among other libraries.
 
@@ -49,15 +48,15 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 
 1. **Navigate to the frontend folder:**
 ```bash
-   cd ../frontend
+cd ../frontend
  ```
 2. **Install Node dependencies:**
 ```bash
-   npm install
+npm install
 ```
    Alternatively, you can use yarn:
 ```bash
-   yarn install
+yarn install
 ```
 
 ## Configuration
@@ -95,8 +94,12 @@ This command starts the FastAPI server with live reload enabled for development.
 - `/upload-resume`: Accepts resume files (PDF or DOCX) and returns analysis insights.
 - `/insights`: Provides access to the detailed resume analysis history.
 - `/download-report/{doc_id}`: Downloads a generated PDF report based on the resume insights.
+  
 Backend will run at → http://127.0.0.1:8000 
 
+- By default, SQLite is used. The DB file is automatically created on first run.
+- Can be swapped with PostgreSQL/MySQL by updating database.py.
+  
 ### Running the Frontend Application
 
 After installing dependencies, start the frontend development server:
@@ -108,6 +111,7 @@ or with yarn:
 yarn start
 ```
 Frontend will run at → http://localhost:3000
+
 The web app provides an interface where users can:
 - **Upload Resumes:** In the “Upload Your Resume” section, choose a file (PDF or DOCX). 
 - **View Insights:** Once a resume is processed, the insights are displayed with evaluation scores, summaries, and key details.
