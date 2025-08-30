@@ -2,6 +2,10 @@
 
 AI-Doc-Insight-Tool is a full-stack application that allows users to upload documents (e.g., resumes) and instantly generate AI-powered insights and summaries. The tool also provides search, filtering, and PDF report downloads with clean formatting. 
 
+## 🚀 Live Demo  
+👉 Deployed on Render: [AI-Doc-Insight-Tool](https://ai-doc-insight-tool-1.onrender.com)
+
+
 ## ✨ Features
 - 🚀 **Resume Upload**: Upload PDF resumes through a clean React UI.  
 - 🤖 **AI-Powered Insights**: Uses Sarvam AI to generate summaries of resumes.  
