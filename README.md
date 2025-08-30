@@ -10,9 +10,6 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 - 🗂 **History Tab**: Browse past uploads with search & sorting support.  
 - 📑 **PDF Report Download**: Generate well-formatted PDF reports with insights.
 - 🔍 Search and filter documents by filename or keywords.
-- 🎨 Modern UI built with React + TailwindCSS.
-- 🗄 Persistent document storage with SQLite + SQLAlchemy.
-- ⚡ Backend powered by FastAPI.
 
 ## ⚙️ Tech Stack
 - Frontend → React, TailwindCSS
@@ -69,6 +66,24 @@ Frontend will run at → http://localhost:3000
 - Insights are stored in the database.
 - Frontend displays AI-generated insights.
 - User can search, filter, and download the insights report (PDF).
+
+### **Sequence Diagram: Upload Flow**
+
+```mermaid
+sequenceDiagram
+    participant FE as Frontend
+    participant BE as FastAPI
+    participant AI as SarvamAI
+    participant DB as SQLite
+
+    FE->>BE: POST /upload-resume (file)
+    BE->>BE: extract_text / docx2txt
+    BE->>AI: chat.completions(prompt)
+    AI-->>BE: JSON insights
+    BE->>DB: INSERT Document
+    DB-->>BE: commit & refresh
+    BE-->>FE: {doc_id, insights, time}
+```
 
 ## 📂 Example API Endpoints
 - POST /upload-resume → Uploads a PDF and generates insights.
