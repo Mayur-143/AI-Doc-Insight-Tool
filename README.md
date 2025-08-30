@@ -35,14 +35,14 @@ cd backend
 python -m venv venv
 venv\Scripts\activate   # On Windows
 source venv/bin/activate  # On Mac/Linux
-
+cd ../
 pip install -r requirements.txt
 ```
 Create a .env file inside the backend/ folder:
 ```bash
 SARVAM_API_KEY=your_api_key_here
 ```
-Run Backend: 
+Run Backend (from root directory): 
 ```bash
 uvicorn main:app --reload
 ```
