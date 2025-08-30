@@ -10,6 +10,7 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 - 🗂 **History Tab**: Browse past uploads with search & sorting support.  
 - 📑 **PDF Report Download**: Generate well-formatted PDF reports with insights.
 - 🔍 Search and filter documents by filename or keywords.
+- 🐳 Dockerized Setup: Run both backend (FastAPI) and frontend (React) via Docker Compose.
 
 ## ⚙️ Tech Stack
 - Frontend → React, TailwindCSS
@@ -17,17 +18,42 @@ AI-Doc-Insight-Tool is a full-stack application that allows users to upload docu
 - Database → SQLite (default, can be swapped with PostgreSQL/MySQL)
 - AI Layer → Sarvam AI API (summarization)
 - PDF Reports → ReportLab
+- Containerization → Docker & Docker Compose
 
 ## 🔧 Setup & Installation
 
-### Backend
+### Option 1: Run with Docker
 
-1. **Clone the repository:**
+1.1. **Clone the repository:**
 ```bash
 git clone https://github.com/Mayur-143/AI-Doc-Insight-Tool.git
 cd AI-Doc-Insight-Tool/backend
  ```
-2. **Create and activate a Python virtual environment:**
+
+1.2 Copy environment variables:
+```bash
+cp backend/.env.example backend/.env
+```
+Fill in your Sarvam API key.
+
+1.3 Build and start both frontend & backend with:
+```bash
+docker compose up --build
+```
+- Backend → http://127.0.0.1:8000 (try using swagger ui)
+- Frontend → http://localhost:3000
+
+
+### Option 2: Run manually
+
+#### backend
+
+2.1. **Clone the repository:**
+```bash
+git clone https://github.com/Mayur-143/AI-Doc-Insight-Tool.git
+cd AI-Doc-Insight-Tool/backend
+ ```
+2.2. **Create and activate a Python virtual environment:**
    - On macOS/Linux:
 ```bash
 python3 -m venv venv
@@ -38,19 +64,19 @@ source venv/bin/activate
 python -m venv venv
 venv\Scripts\activate
 ```
-3. **Install required dependencies:**
+2.3. **Install required dependencies:**
 ```bash 
 pip install -r requirements.txt
 ```
    The backend uses FastAPI, SQLAlchemy, reportlab, pdfplumber, docx2txt, and dotenv among other libraries.
 
-### Frontend
+#### Frontend
 
-1. **Navigate to the frontend folder:**
+2.4. **Navigate to the frontend folder:**
 ```bash
 cd ../frontend
  ```
-2. **Install Node dependencies:**
+2.5  **Install Node dependencies:**
 ```bash
 npm install
 ```
