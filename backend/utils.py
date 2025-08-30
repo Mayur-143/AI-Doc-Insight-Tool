@@ -1,9 +1,11 @@
 import pdfplumber
 from sarvamai import SarvamAI
+from dotenv import load_dotenv
 import os
 from collections import Counter
 
 # Init client
+load_dotenv()
 SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
 client = SarvamAI(api_subscription_key=SARVAM_API_KEY)
 
