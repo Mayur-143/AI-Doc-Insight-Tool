@@ -42,7 +42,7 @@ Create a .env file inside the backend/ folder:
 ```bash
 SARVAM_API_KEY=your_api_key_here
 ```
-or set env key in the command prompt
+or set env key in the command prompt(PowerShell)
 ```bash
 $env:SARVAM_API_KEY="your_api_key_here"
 ```
