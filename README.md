@@ -42,9 +42,13 @@ Create a .env file inside the backend/ folder:
 ```bash
 SARVAM_API_KEY=your_api_key_here
 ```
+or set env key in the command prompt
+```bash
+$env:SARVAM_API_KEY="your_api_key_here"
+```
 Run Backend (from root directory): 
 ```bash
-uvicorn main:app --reload
+uvicorn backend.main:app --reload
 ```
 Backend will run at → http://127.0.0.1:8000
 ### Database
